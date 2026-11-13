@@ -1,0 +1,1579 @@
+# MASTER SOFTWARE DEVELOPMENT PROMPT
+# PROFESSIONAL COURSE & EDUCATIONAL CENTER MANAGEMENT SYSTEM
+
+## 1. YOUR ROLE AND RESPONSIBILITIES
+
+Act as a senior full-stack software architect, senior PHP developer, database engineer, UI/UX designer, security engineer, and QA specialist with at least 10 years of professional experience building enterprise-level web applications.
+
+Your task is to ANALYZE, DESIGN, BUILD, TEST, DEBUG, and DELIVER a complete, production-oriented Course and Educational Center Management System.
+
+This is a real software development project, not a demo, prototype, template, or visual mockup.
+
+You are responsible for the complete implementation of every requirement described in this document.
+
+You must not silently skip, simplify, replace, or pretend to implement any feature.
+
+The final result must be a fully functional, integrated, secure, responsive, multilingual web application with a public website and three role-based dashboards.
+
+---
+
+# 2. PROJECT OVERVIEW
+
+Build a professional web-based management system for ONE educational center / private course.
+
+The system must contain:
+
+1. Public educational website.
+2. Administrator dashboard.
+3. Teacher dashboard.
+4. Student dashboard.
+5. Complete educational management.
+6. Financial management.
+7. Attendance management.
+8. Homework and examination management.
+9. Student ID card designer and printing.
+10. Certificate designer and issuance.
+11. Internal notification system.
+12. Internal messaging system.
+13. Complete public website CMS.
+14. Five-language static interface translation.
+15. Reporting, Excel export, printing, and analytics.
+16. Activity logs and automated reminders.
+17. Database backup and restoration.
+
+The system is initially designed for one educational center and one administrative organization.
+
+Do not implement multi-branch management in this version.
+
+The administrator must have full control over the entire application.
+
+---
+
+# 3. MANDATORY TECHNOLOGY STACK
+
+Use the following technologies:
+
+## Backend
+- Native PHP 8.2+.
+- MySQL 8+ or compatible MariaDB.
+- PDO with prepared statements.
+- Secure PHP session management.
+- Modular, organized native PHP architecture.
+
+## Frontend
+- HTML5.
+- CSS3.
+- JavaScript.
+- Bootstrap 5.
+- jQuery.
+- AJAX.
+- Fetch API where appropriate.
+- Font Awesome or Bootstrap Icons.
+
+## UI and Functional Libraries
+- DataTables for advanced tables.
+- Select2 for searchable dropdowns.
+- SweetAlert2 for beautiful confirmation dialogs.
+- Toastr for notification messages.
+- Chart.js for dashboard charts.
+- CKEditor 5 for website content editing.
+- Flatpickr for date and time selection.
+- Dropzone for file uploads.
+- PhpSpreadsheet for Excel import/export.
+- CSS3 and JavaScript for advanced animations.
+
+Use stable and mutually compatible library versions.
+
+Do not use React, Next.js, Node.js, Laravel, or unnecessary MVC frameworks.
+
+Do not introduce additional technologies unless there is a clear technical reason.
+
+---
+
+# 4. PROJECT ARCHITECTURE
+
+Build the application using a clean, modular, maintainable Native PHP structure.
+
+Suggested organization:
+
+/project-root
+    /admin
+    /teacher
+    /student
+    /public
+    /assets
+        /css
+        /js
+        /images
+        /fonts
+    /config
+    /includes
+    /languages
+        /fa
+        /ps
+        /uz
+        /tk
+        /en
+    /modules
+        /students
+        /teachers
+        /subjects
+        /courses
+        /classes
+        /timetables
+        /attendance
+        /examinations
+        /homework
+        /finance
+        /salaries
+        /id-cards
+        /certificates
+        /notifications
+        /messages
+        /website
+        /reports
+        /documents
+        /audit-logs
+        /backups
+        /settings
+    /uploads
+    /storage
+    /database
+    /vendor
+    index.php
+    login.php
+    logout.php
+    install.php
+    README.md
+
+You may improve this structure if necessary, but preserve the principles:
+
+- Clear module separation.
+- Reusable components.
+- Centralized configuration.
+- Centralized authentication and authorization.
+- Centralized database connection.
+- Reusable validation functions.
+- Reusable language functions.
+- Reusable notification components.
+- Consistent URL handling.
+- No duplicated business logic.
+
+Do not create unnecessary abstractions.
+
+Do not place all application logic inside a few huge PHP files.
+
+Keep every module functional and properly integrated.
+
+---
+
+# 5. USER ROLES AND ACCESS CONTROL
+
+The system must have exactly three primary roles:
+
+## 5.1 Administrator
+
+The administrator has complete control over:
+
+- All students.
+- All teachers.
+- Subjects.
+- Courses and classes.
+- Timetables.
+- Teacher assignments.
+- Student assignments.
+- Attendance.
+- Examinations and grades.
+- Homework.
+- Financial records.
+- Salaries.
+- Student ID cards.
+- Certificates.
+- Notifications.
+- Messages.
+- Website CMS.
+- Public website settings.
+- Reports.
+- Excel operations.
+- Audit logs.
+- Backups and restoration.
+- System settings.
+- User accounts and permissions.
+
+## 5.2 Teacher
+
+Teachers can:
+
+- View their assigned classes.
+- View their assigned subjects.
+- View only students assigned to them.
+- View their own timetable.
+- Record student attendance for authorized classes.
+- Record their own attendance where permitted.
+- Create homework for assigned students.
+- Set homework deadlines.
+- Upload homework attachments.
+- Review submitted homework.
+- Provide feedback and grades.
+- Record examination grades when authorized.
+- View authorized academic reports.
+- Receive internal notifications.
+- Send and receive permitted messages.
+- Manage their own profile and password.
+
+Teachers must NEVER access unrelated students, classes, financial records, administrator settings, or unauthorized information.
+
+All restrictions must be enforced on the server side, not only hidden in the interface.
+
+## 5.3 Student
+
+Students can:
+
+- View their personal profile.
+- View their registered courses and classes.
+- View their assigned subjects.
+- View their class timetable.
+- View their attendance records.
+- View examination results and grades.
+- View homework assignments.
+- Submit homework and attachments.
+- View feedback and homework grades.
+- View their own financial status and payment history.
+- View and print their authorized student ID card.
+- View their certificates.
+- Receive internal notifications.
+- Send and receive permitted messages.
+- Update permitted profile information.
+- Change their password.
+
+Students must never access other students' private information.
+
+---
+
+# 6. AUTHENTICATION AND ACCOUNT MANAGEMENT
+
+Implement:
+
+- Secure login.
+- Secure logout.
+- Password hashing using password_hash().
+- Password verification using password_verify().
+- Session regeneration after login.
+- Session timeout.
+- Login attempt protection.
+- Account activation and deactivation.
+- Password change.
+- Password reset through an administrator-controlled process.
+- Role-based redirection after login.
+- Login activity records.
+
+There must be no unrestricted public student registration.
+
+The administrator creates and controls student and teacher accounts.
+
+---
+
+# 7. MULTILINGUAL SYSTEM
+
+Support five languages:
+
+1. Dari / Afghan Persian.
+2. Pashto.
+3. Afghan Uzbek.
+4. Afghan Turkmen.
+5. English.
+
+Language requirements:
+
+- Dari: RTL.
+- Pashto: RTL.
+- Afghan Uzbek: RTL for this application.
+- Afghan Turkmen: RTL for this application.
+- English: LTR.
+
+IMPORTANT:
+
+Implement ONLY STATIC INTERFACE TRANSLATION in this version.
+
+Translate:
+
+- Navigation menus.
+- Sidebar items.
+- Dashboard labels.
+- Buttons.
+- Form labels.
+- Placeholders.
+- Validation messages.
+- Success messages.
+- Error messages.
+- Confirmation dialogs.
+- Table headings.
+- Status labels.
+- Reports.
+- System notifications.
+- Pagination.
+- Search controls.
+- Login and account interfaces.
+- Website interface labels.
+
+Use separate language files.
+
+Do not implement automatic translation.
+
+Do not implement a dynamic content translation management module.
+
+Do not require administrators to translate every content entry into five languages.
+
+The language selector must work throughout the entire application.
+
+Persist each user's selected language.
+
+Provide a configurable default language.
+
+Ensure correct font rendering, text alignment, layout direction, dates, and form controls.
+
+---
+
+# 8. PUBLIC WEBSITE
+
+Create a visually impressive, modern, professional educational website.
+
+The public website must be connected to the administrator's CMS.
+
+## 8.1 Homepage
+
+Include:
+
+- Professional navigation bar.
+- Educational branding and logo.
+- Language selector.
+- Login button.
+- Large animated hero section.
+- Image slider.
+- Welcome message.
+- Educational center introduction.
+- Featured courses or subjects.
+- Teacher showcase.
+- Why Choose Us section.
+- Gallery preview.
+- Top students section.
+- Statistics section.
+- Call-to-action section.
+- Contact information.
+- Professional footer.
+
+## 8.2 Hero Slider
+
+The administrator must be able to:
+
+- Add slides.
+- Edit slides.
+- Delete slides.
+- Upload images.
+- Set titles and descriptions.
+- Set button labels and links.
+- Change display order.
+- Enable or disable slides.
+- Configure automatic transition duration.
+
+The slider must support smooth animations, responsive layouts, and manual navigation.
+
+## 8.3 Teachers Page
+
+Display:
+
+- Teacher photographs.
+- Names.
+- Subjects or specialties.
+- Short biographies.
+- Publicly approved profiles.
+
+## 8.4 Why Choose Us
+
+Provide editable feature cards describing:
+
+- Educational quality.
+- Professional teaching.
+- Learning environment.
+- Educational facilities.
+- Teaching methodology.
+- Other administrator-defined benefits.
+
+## 8.5 Gallery
+
+The gallery must support:
+
+- Image uploads.
+- Video uploads.
+- Gallery categories.
+- Titles and descriptions.
+- Publication status.
+- Responsive image grids.
+- Video previews and playback.
+- Lightbox for images.
+- Video playback interface.
+
+Validate uploaded media carefully.
+
+For large videos, use safe upload limits and configurable storage policies.
+
+## 8.6 About Us
+
+The administrator can manage:
+
+- Center introduction.
+- History.
+- Mission.
+- Vision.
+- Objectives.
+- Other informational sections.
+
+## 8.7 Top Students
+
+Create a dedicated public section for outstanding students.
+
+The administrator can:
+
+- Select students.
+- Upload or use approved student photos.
+- Add achievements.
+- Add class and course information.
+- Publish or unpublish student profiles.
+
+Respect student privacy and do not expose confidential information.
+
+## 8.8 Contact Us
+
+Display:
+
+- Phone numbers.
+- Address.
+- Email if configured.
+- Social media links.
+- Map/location if configured.
+
+## 8.9 Complete Website CMS
+
+The administrator must be able to:
+
+- Create custom pages.
+- Edit pages.
+- Delete pages.
+- Publish and unpublish pages.
+- Manage navigation menus.
+- Manage homepage sections.
+- Manage footer content.
+- Manage public website settings.
+- Manage social links.
+- Manage images and videos.
+
+Implement safe page slugs and prevent broken essential navigation.
+
+---
+
+# 9. STUDENT MANAGEMENT
+
+Create a complete student management module.
+
+Features:
+
+- Student registration.
+- Unique student identification number.
+- Student photograph upload.
+- Personal information.
+- Contact information.
+- Guardian information where required.
+- Enrollment information.
+- Course assignment.
+- Class assignment.
+- Student status management.
+- Student profile.
+- Academic history.
+- Attendance history.
+- Examination history.
+- Homework history.
+- Payment history.
+- Certificate history.
+- ID card history.
+
+Support:
+
+- Advanced search.
+- Filters.
+- Sorting.
+- Pagination.
+- Excel export.
+- Printing.
+
+Use a structured database design.
+
+Avoid storing unrelated information in a single field.
+
+---
+
+# 10. TEACHER MANAGEMENT
+
+Features:
+
+- Teacher registration.
+- Teacher photograph.
+- Personal information.
+- Contact information.
+- Specialization.
+- Assigned subjects.
+- Assigned classes.
+- Assigned students.
+- Teaching timetable.
+- Attendance history.
+- Salary history.
+- Account status.
+
+The administrator must control all assignments.
+
+A teacher's access must immediately reflect changes to their assignments.
+
+---
+
+# 11. COURSE, SUBJECT AND CLASS MANAGEMENT
+
+## Subjects
+
+Implement:
+
+- Subject creation.
+- Automatic subject code generation.
+- Subject editing.
+- Subject activation/deactivation.
+- Subject descriptions.
+
+## Courses
+
+Implement:
+
+- Course title.
+- Course code.
+- Duration.
+- Start date.
+- End date.
+- Fees.
+- Capacity.
+- Related subjects.
+- Course status.
+
+## Classes
+
+Implement:
+
+- Class creation.
+- Unique class code.
+- Class name.
+- Level.
+- Capacity.
+- Course association.
+- Start/end dates.
+- Assigned subjects.
+- Assigned teachers.
+- Registered students.
+
+Prevent invalid assignments and duplicate records.
+
+---
+
+# 12. TIMETABLE MANAGEMENT
+
+The administrator must be able to create and manage a separate timetable for every class.
+
+Each timetable entry must include:
+
+- Class.
+- Subject.
+- Teacher.
+- Day.
+- Start time.
+- End time.
+- Room/location if required.
+
+Implement conflict detection.
+
+Prevent:
+
+- One teacher being assigned to overlapping classes.
+- One class having overlapping lessons.
+- Invalid time ranges.
+
+Provide timetable views for administrators, teachers, and students.
+
+Support printing.
+
+---
+
+# 13. ATTENDANCE MANAGEMENT
+
+Implement attendance for both students and teachers.
+
+Student attendance:
+
+- Select class.
+- Select date/session.
+- Display assigned students.
+- Mark present.
+- Mark absent.
+- Mark late.
+- Mark excused/leave.
+- Save attendance.
+- Edit attendance with authorization.
+- View attendance reports.
+
+Teacher attendance:
+
+- Record teacher attendance.
+- View attendance history.
+- Generate reports.
+
+Prevent duplicate attendance entries.
+
+Maintain an audit history for attendance corrections.
+
+---
+
+# 14. EXAMINATION AND GRADING SYSTEM
+
+Implement:
+
+- Examination creation.
+- Examination date.
+- Class assignment.
+- Subject assignment.
+- Maximum score.
+- Passing score.
+- Student grades.
+- Teacher feedback.
+- Result publication.
+- Student result viewing.
+- Academic reports.
+
+Support configurable grading rules.
+
+Do not hardcode grading assumptions throughout the application.
+
+---
+
+# 15. HOMEWORK MANAGEMENT
+
+Teachers can:
+
+- Create assignments.
+- Write descriptions.
+- Set deadlines.
+- Attach files.
+- Assign homework to authorized classes or students.
+- View submissions.
+- Review submissions.
+- Provide feedback.
+- Assign grades.
+
+Students can:
+
+- View assignments.
+- Upload responses.
+- Attach files.
+- Submit before deadlines.
+- View teacher feedback.
+- View assignment status.
+
+Implement submission timestamps and deadline validation.
+
+---
+
+# 16. FINANCIAL MANAGEMENT
+
+Create a complete financial module.
+
+## 16.1 Student Fees
+
+Features:
+
+- Fee definitions.
+- Course/class fee assignment.
+- Student fee records.
+- Full payments.
+- Installment payments.
+- Payment history.
+- Remaining balance.
+- Outstanding debt reports.
+- Payment receipt generation.
+- Receipt printing.
+
+Prevent duplicate payment transactions.
+
+Use database transactions for financial operations.
+
+Do not silently modify historical payment records.
+
+## 16.2 Income
+
+Record:
+
+- Income amount.
+- Date.
+- Category.
+- Description.
+- Related student/payment where applicable.
+- Responsible user.
+- Attachments if necessary.
+
+## 16.3 Expenses
+
+Record:
+
+- Expense amount.
+- Date.
+- Category.
+- Description.
+- Responsible user.
+- Supporting documents.
+
+## 16.4 Teacher Salaries
+
+Implement:
+
+- Salary definitions.
+- Salary payment records.
+- Payment dates.
+- Payment amounts.
+- Remaining salary balance where applicable.
+- Salary reports.
+
+## 16.5 Financial Dashboard
+
+Display:
+
+- Total income.
+- Total expenses.
+- Net balance.
+- Collected student fees.
+- Outstanding fees.
+- Salary payments.
+- Monthly financial charts.
+
+All financial summaries must be calculated from actual database records.
+
+---
+
+# 17. STUDENT ID CARD DESIGNER
+
+Build a professional visual ID card designer.
+
+The administrator can:
+
+- Create card templates.
+- Edit card templates.
+- Select card dimensions.
+- Select portrait or landscape layout.
+- Set background and colors.
+- Upload logos and backgrounds.
+- Add and position text elements.
+- Add student photograph.
+- Add student name.
+- Add student ID.
+- Add class/course.
+- Add issue date.
+- Add expiry date if applicable.
+- Preview the card.
+- Save multiple templates.
+
+Implement:
+
+- Individual printing.
+- Bulk printing.
+- Student selection using checkboxes.
+- Print layout optimization.
+- Print preview.
+
+Prevent accidental duplicate cards.
+
+The designer must produce actual printable layouts, not just a visual mockup.
+
+---
+
+# 18. CERTIFICATE DESIGNER
+
+Build a professional certificate designer.
+
+Features:
+
+- Create certificate templates.
+- Edit templates.
+- Select paper size.
+- Portrait or landscape.
+- Background images.
+- Logo placement.
+- Text positioning.
+- Student photo support.
+- Student name placeholders.
+- Course and class placeholders.
+- Issue date.
+- Certificate number.
+- Signature areas.
+- Stamp/seal areas.
+- Preview.
+- Save templates.
+- Issue to individual students.
+- Issue to selected groups.
+- Print certificates.
+- Maintain certificate history.
+
+Provide reusable dynamic placeholders.
+
+Prevent accidental duplicate issuance.
+
+---
+
+# 19. INTERNAL NOTIFICATION SYSTEM
+
+Do not rely on email for the internal notification system.
+
+Implement an in-app notification center.
+
+Administrator can send notifications to:
+
+- One student.
+- One teacher.
+- Selected users.
+- Entire class.
+- All students.
+- All teachers.
+- All system users.
+
+Features:
+
+- Notification title.
+- Notification message.
+- Recipient targeting.
+- Read/unread status.
+- Notification timestamps.
+- Notification counter.
+- Notification history.
+- Mark as read.
+- Mark all as read.
+
+Automatically generate notifications for important events such as:
+
+- New homework.
+- Homework deadline reminders.
+- New messages.
+- Payment reminders.
+- Timetable changes.
+- Examination results.
+- Other configured educational events.
+
+---
+
+# 20. INTERNAL MESSAGING SYSTEM
+
+Implement an internal messaging system.
+
+Features:
+
+- Conversations.
+- Private messages.
+- Sender and recipient.
+- Message timestamps.
+- Read/unread status.
+- Conversation history.
+- Message notifications.
+- Search conversations.
+- Authorized file attachments if enabled.
+
+Enforce participant-based access.
+
+Do not expose private messages to unrelated users.
+
+---
+
+# 21. DOCUMENT MANAGEMENT
+
+Implement secure document storage for authorized student and teacher records.
+
+Features:
+
+- Upload documents.
+- Categorize documents.
+- Link documents to users.
+- Preview supported file types where safe.
+- Download with authorization.
+- Delete or archive with permission.
+- Store upload metadata.
+
+Validate MIME types, extensions, file size, and file contents where practical.
+
+---
+
+# 22. GLOBAL SEARCH AND REPORTING
+
+Implement a powerful global search system.
+
+Search authorized records such as:
+
+- Students.
+- Teachers.
+- Subjects.
+- Classes.
+- Courses.
+- Transactions.
+- Homework.
+- Certificates.
+
+Implement:
+
+- Live search.
+- Advanced filters.
+- Search suggestions.
+- Pagination.
+- Sorting.
+- Efficient database queries.
+
+Create reports for:
+
+- Student enrollment.
+- Student attendance.
+- Teacher attendance.
+- Class capacity.
+- Examination results.
+- Homework performance.
+- Fee payments.
+- Outstanding balances.
+- Income.
+- Expenses.
+- Teacher salaries.
+- Certificates.
+
+Provide Excel exports using PhpSpreadsheet.
+
+Respect all role permissions when searching and exporting.
+
+---
+
+# 23. DASHBOARDS AND ANALYTICS
+
+Administrator dashboard:
+
+- Total students.
+- Active students.
+- Total teachers.
+- Total courses.
+- Total classes.
+- Recent registrations.
+- Attendance statistics.
+- Financial summaries.
+- Outstanding fees.
+- Monthly income and expenses.
+- Recent activities.
+- Pending tasks.
+- Notifications.
+
+Teacher dashboard:
+
+- Assigned classes.
+- Assigned students.
+- Today's timetable.
+- Attendance tasks.
+- Pending homework reviews.
+- Recent messages.
+- Notifications.
+
+Student dashboard:
+
+- Personal profile summary.
+- Current courses.
+- Timetable.
+- Attendance summary.
+- Recent grades.
+- Pending homework.
+- Payment status.
+- Notifications.
+
+Use Chart.js for relevant visualizations.
+
+Never display fabricated statistics.
+
+---
+
+# 24. AUDIT LOG
+
+Implement an audit logging module.
+
+Record important actions:
+
+- Login and logout.
+- Student creation and modification.
+- Teacher creation and modification.
+- Assignment changes.
+- Attendance corrections.
+- Grade modifications.
+- Financial transactions.
+- Certificate issuance.
+- ID card issuance.
+- Permission changes.
+- Backup and restore operations.
+- Website content changes.
+
+Store:
+
+- User ID.
+- Action.
+- Module.
+- Related record.
+- Timestamp.
+- Result.
+- Necessary technical metadata.
+
+Audit records must not be editable by ordinary users.
+
+Avoid recording passwords, session secrets, or sensitive credentials.
+
+---
+
+# 25. AUTOMATED REMINDERS
+
+Implement configurable automated internal reminders for:
+
+- Upcoming homework deadlines.
+- Overdue homework.
+- Outstanding student fees.
+- Important examinations.
+- Relevant educational deadlines.
+- Other administrator-configured events.
+
+Prevent duplicate reminders.
+
+Use a reliable scheduled execution method supported by the hosting environment, such as cron jobs.
+
+Provide a manual execution or recovery mechanism if scheduled execution is unavailable.
+
+---
+
+# 26. STUDENT PROMOTION
+
+Implement student promotion between educational levels or classes.
+
+Features:
+
+- Select current class.
+- Select target class.
+- Select eligible students.
+- Preview the selected students.
+- Confirm promotion.
+- Update class assignments.
+- Preserve previous academic history.
+- Record promotion date.
+- Support bulk promotion.
+
+Never erase historical enrollment records during promotion.
+
+---
+
+# 27. BACKUP AND RESTORE
+
+Implement:
+
+- Manual database backup.
+- Scheduled database backup.
+- Backup history.
+- Backup file management.
+- Secure backup storage.
+- Authorized backup downloads.
+- Backup integrity checks.
+- Restore functionality.
+- Restore confirmation.
+- Operation logging.
+
+Make it clear that restoration may replace existing database records.
+
+Test backup and restoration using a separate test database before production use.
+
+Never expose backup files publicly.
+
+---
+
+# 28. ADVANCED UI/UX REQUIREMENTS
+
+The interface must look like a premium, professionally designed commercial application.
+
+## Admin Layout
+
+Implement:
+
+- Professional sidebar.
+- Top navigation bar.
+- User profile menu.
+- Notification center.
+- Breadcrumb navigation.
+- Responsive dashboard.
+- Modern statistic cards.
+- Charts.
+- Professional tables.
+- Search and filter controls.
+
+## Sidebar Behavior
+
+- Collapsible submenu groups.
+- Smooth expand/collapse animation.
+- Automatically expand the group containing the active page.
+- Automatically scroll to the active sidebar item.
+- Preserve a clean navigation hierarchy.
+- Mobile-friendly sidebar drawer.
+
+## Data Tables
+
+Use DataTables with:
+
+- Live search.
+- Column sorting.
+- Pagination.
+- Filters.
+- Responsive behavior.
+- Export options where appropriate.
+- Loading indicators.
+- Empty states.
+
+## Forms
+
+Implement:
+
+- Clear labels.
+- Helpful placeholders.
+- Client-side validation.
+- Server-side validation.
+- Inline validation feedback.
+- Loading states.
+- Duplicate-submission protection.
+- Clear success/error responses.
+
+## Notifications and Alerts
+
+Use SweetAlert2 and Toastr.
+
+Provide polished alerts for:
+
+- Successful creation.
+- Successful editing.
+- Successful deletion.
+- Failed operations.
+- Validation errors.
+- Confirmation dialogs.
+- Financial actions.
+- Backup operations.
+
+Do not use browser alert() as the primary interface.
+
+## AJAX EXPERIENCE
+
+Use jQuery AJAX and Fetch API where appropriate.
+
+Important operations should work without unnecessary full-page reloads:
+
+- Search.
+- Filters.
+- Form submission.
+- Record creation.
+- Record editing.
+- Status changes.
+- Notification updates.
+- Messaging.
+- Dynamic dropdowns.
+
+Always implement:
+
+- Loading states.
+- Error handling.
+- Server-side validation.
+- Authorization.
+- CSRF protection.
+- Duplicate-submission prevention.
+
+AJAX must not bypass security.
+
+---
+
+# 29. ADVANCED 3D LOGIN EXPERIENCE
+
+Create a visually impressive login experience.
+
+Main concept:
+
+A beautifully designed three-dimensional educational book.
+
+When the login page loads:
+
+1. Display a polished educational scene.
+2. Show a closed three-dimensional book.
+3. Animate the book opening smoothly.
+4. Reveal the login interface as part of the scene.
+5. Provide smooth transitions between login and other permitted account forms.
+
+Requirements:
+
+- Professional 3D appearance.
+- Smooth animation.
+- Responsive layout.
+- Proper keyboard accessibility.
+- Reduced-motion support.
+- Optimized performance.
+- Graceful fallback if advanced 3D rendering is unavailable.
+
+Do not sacrifice usability or loading speed for animation.
+
+The account creation interface must remain administrator-controlled.
+
+Do not implement unrestricted public registration.
+
+---
+
+# 30. PRINTING AND EXCEL
+
+Provide printing for:
+
+- Student ID cards.
+- Certificates.
+- Payment receipts.
+- Student lists.
+- Teacher lists.
+- Attendance reports.
+- Timetables.
+- Examination results.
+- Financial reports.
+- Other relevant records.
+
+Implement print-specific CSS.
+
+Use PhpSpreadsheet for Excel exports.
+
+Ensure exported data respects the current user's permissions and selected filters.
+
+---
+
+# 31. SECURITY REQUIREMENTS
+
+Security is mandatory.
+
+Implement:
+
+- PDO prepared statements.
+- Password hashing.
+- CSRF protection.
+- XSS prevention.
+- Input validation.
+- Output escaping.
+- Session security.
+- Authorization checks.
+- Secure file uploads.
+- Secure download handling.
+- Login throttling.
+- Sensitive operation confirmation.
+- Secure configuration.
+- Backup protection.
+- Database transaction handling.
+- Error logging without exposing internal errors to users.
+
+Never trust client-side validation alone.
+
+Never rely on hidden interface elements as authorization.
+
+Protect all administrative and teacher operations.
+
+---
+
+# 32. DATABASE DESIGN
+
+Before implementing application modules, design a normalized relational database.
+
+Identify all entities, relationships, foreign keys, unique constraints, indexes, and required transaction boundaries.
+
+The database must cover at least:
+
+- Users.
+- Roles.
+- Permissions if required.
+- Students.
+- Teachers.
+- Courses.
+- Subjects.
+- Classes.
+- Enrollments.
+- Teacher assignments.
+- Student assignments.
+- Timetables.
+- Attendance.
+- Examinations.
+- Grades.
+- Homework.
+- Homework submissions.
+- Fee definitions.
+- Student fee records.
+- Payments.
+- Income.
+- Expenses.
+- Salary definitions.
+- Salary payments.
+- ID card templates.
+- ID card records.
+- Certificate templates.
+- Certificates.
+- Notifications.
+- Notification recipients.
+- Conversations.
+- Messages.
+- Documents.
+- Website pages.
+- Website menus.
+- Website sliders.
+- Website sections.
+- Gallery categories.
+- Gallery media.
+- Featured students.
+- Website settings.
+- Audit logs.
+- Reminder jobs.
+- Backup records.
+- System settings.
+
+This is a minimum conceptual list, not a restriction on additional necessary tables.
+
+Requirements:
+
+- Use appropriate primary keys.
+- Define foreign keys.
+- Add useful indexes.
+- Enforce uniqueness where required.
+- Prevent invalid relationships.
+- Use appropriate data types.
+- Preserve historical records.
+- Avoid unnecessary duplication.
+- Use transactions for financial and other critical multi-step operations.
+
+Provide a complete SQL installation file.
+
+The installation must create a clean, new database schema.
+
+Do not silently destroy or overwrite an existing database.
+
+---
+
+# 33. IMPLEMENTATION WORKFLOW
+
+Follow this development workflow.
+
+## Phase 1: Analysis
+
+- Analyze the complete requirements.
+- Identify dependencies.
+- Identify ambiguities.
+- Plan modules.
+- Define user workflows.
+- Define authorization rules.
+- Identify security-sensitive operations.
+
+## Phase 2: Database Design
+
+- Create an entity relationship model.
+- Design normalized tables.
+- Define foreign keys.
+- Define indexes.
+- Review financial data integrity.
+- Review historical data requirements.
+- Produce complete SQL schema.
+
+## Phase 3: Architecture
+
+- Create the project directory structure.
+- Create configuration files.
+- Implement database connection.
+- Implement authentication.
+- Implement authorization.
+- Implement reusable helpers.
+- Implement static language system.
+- Implement shared UI components.
+
+## Phase 4: UI/UX Foundation
+
+Build:
+
+- Public website foundation.
+- Admin layout.
+- Teacher layout.
+- Student layout.
+- Login experience.
+- Navigation.
+- Responsive components.
+- Notification components.
+
+## Phase 5: Functional Development
+
+Implement every module described in this prompt.
+
+Develop in logical dependency order.
+
+Connect every module to the real database.
+
+Implement real CRUD operations.
+
+Implement actual business logic.
+
+Do not create buttons that do nothing.
+
+Do not leave forms disconnected from the database.
+
+Do not use fake records as production functionality.
+
+## Phase 6: Integration
+
+Ensure:
+
+- Student registration connects to classes and fees.
+- Teacher assignments control access.
+- Timetables connect to teachers, subjects, and classes.
+- Attendance connects to actual students and classes.
+- Homework connects teachers and assigned students.
+- Payments update financial balances correctly.
+- Certificates and cards use real student data.
+- Notifications are connected to real events.
+- CMS changes appear on the public website.
+- Reports use actual database records.
+
+## Phase 7: Testing
+
+Test:
+
+- All three roles.
+- Unauthorized access attempts.
+- CRUD operations.
+- Financial calculations.
+- Attendance.
+- Timetable conflict detection.
+- Homework submissions.
+- Notifications.
+- Messaging.
+- File uploads.
+- Excel exports.
+- Printing.
+- Language switching.
+- RTL/LTR behavior.
+- Backup and restore.
+- Responsive layouts.
+
+Fix discovered defects.
+
+## Phase 8: Final Delivery
+
+Provide:
+
+1. Complete PHP source code.
+2. Complete SQL database file.
+3. All required assets.
+4. All required libraries and dependency instructions.
+5. Configuration example.
+6. Installation instructions.
+7. Default administrator setup instructions.
+8. README documentation.
+9. Testing report.
+10. List of implemented modules.
+11. List of known limitations, if any.
+
+---
+
+# 34. CRITICAL DEVELOPMENT RULES
+
+These rules are mandatory:
+
+1. Do not build only a prototype.
+2. Do not stop after designing the interface.
+3. Do not skip backend implementation.
+4. Do not use hardcoded fake statistics.
+5. Do not create nonfunctional buttons.
+6. Do not leave placeholder pages presented as completed modules.
+7. Do not implement fake database operations.
+8. Do not bypass authorization.
+9. Do not store passwords in plain text.
+10. Do not ignore database relationships.
+11. Do not silently discard existing records.
+12. Do not claim testing that was not performed.
+13. Do not claim a module is complete if it is only partially implemented.
+14. Do not omit mobile responsiveness.
+15. Do not omit the five static interface languages.
+16. Do not implement dynamic content translation in this version.
+17. Do not introduce multi-branch management.
+18. Do not create unrestricted public registration.
+19. Do not replace Native PHP with an unrequested framework.
+20. Do not sacrifice system stability for visual effects.
+
+When encountering a technical limitation, explain it and implement the safest practical alternative.
+
+When a requirement is ambiguous, identify the ambiguity and choose a conservative, consistent implementation only when it does not change the intended business rules.
+
+Maintain a development checklist and mark a feature complete only after implementation and verification.
+
+---
+
+# 35. FINAL QUALITY STANDARD
+
+The final system must feel like a professionally developed educational management product.
+
+It must have:
+
+- A beautiful public website.
+- A polished administrator dashboard.
+- A useful teacher dashboard.
+- A clear student dashboard.
+- Consistent five-language interface.
+- Professional RTL/LTR handling.
+- Functional modules.
+- Accurate financial calculations.
+- Reliable database relationships.
+- Strong authorization.
+- Secure uploads.
+- Professional print layouts.
+- Real Excel exports.
+- Internal notifications and messaging.
+- Reliable backup and restoration.
+- Smooth interactions and animations.
+- Good performance.
+- Complete installation documentation.
+
+The most important success criterion is not the number of screens or visual effects.
+
+It is the correctness, stability, security, completeness, and real-world usability of the entire application.
+
+---
+
+# 36. FINAL EXECUTION INSTRUCTION
+
+Start by analyzing the entire specification.
+
+Create a complete implementation plan and a requirements checklist.
+
+Then design and implement the database and application architecture.
+
+After that, build the entire system in logical dependency order.
+
+Use your available development tools, filesystem, terminal, database tools, and testing environment to implement and verify the application.
+
+Do not stop at a plan or a mockup.
+
+Continue until all required modules are implemented, integrated, and tested.
+
+If the development environment or execution limits require multiple internal stages, preserve the project state and continue from the exact point reached without rebuilding completed work unnecessarily.
+
+Before final delivery, perform a complete requirements audit against this prompt.
+
+Report honestly:
+
+- What has been implemented.
+- What has been tested.
+- What has passed.
+- What remains incomplete.
+- Any known limitations.
+
+Deliver the complete working source project and installation package.
+
+**BUILD THE COMPLETE SYSTEM. NOT JUST A DEMONSTRATION.**

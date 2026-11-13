@@ -1,0 +1,124 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-display: 'Plus Jakarta Sans', 'Vazirmatn', system-ui, sans-serif;
+    --font-sans: 'DM Sans', 'Vazirmatn', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+
+  html[dir="rtl"] {
+    --font-display: 'Vazirmatn', 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-sans: 'Vazirmatn', 'DM Sans', system-ui, sans-serif;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: #f8fafc;
+    color: #0f172a;
+  }
+
+  h1, h2, h3, h4, .font-display {
+    font-family: var(--font-display);
+  }
+
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+
+  button:not(:disabled),
+  a[href],
+  select:not(:disabled),
+  summary,
+  [role="button"]:not([aria-disabled="true"]),
+  input[type="checkbox"]:not(:disabled),
+  input[type="radio"]:not(:disabled),
+  input[type="file"]:not(:disabled),
+  input[type="submit"]:not(:disabled),
+  input[type="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  select:disabled,
+  input:disabled,
+  textarea:disabled,
+  [aria-disabled="true"] {
+    cursor: not-allowed;
+  }
+}
+
+/* 3D Educational Book Login Scene */
+.book-stage {
+  perspective: 2000px;
+}
+
+.book-wrapper {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.book-cover-flap {
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  transition: transform 1.15s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html[dir="rtl"] .book-cover-flap {
+  transform-origin: right center;
+}
+
+.book-wrapper[data-book-open="true"] .book-cover-flap {
+  transform: rotateY(-168deg);
+}
+
+html[dir="rtl"] .book-wrapper[data-book-open="true"] .book-cover-flap {
+  transform: rotateY(168deg);
+}
+
+.book-face {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.book-face-back {
+  transform: rotateY(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .book-wrapper,
+  .book-cover-flap {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Print optimization for ID cards, certificates, receipts, and reports */
+@media print {
+  @page {
+    margin: 10mm;
+  }
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  .no-print,
+  aside,
+  header.app-topbar,
+  nav.public-navbar {
+    display: none !important;
+  }
+  .print-only-container {
+    display: block !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+  .print-break-inside-avoid {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}
+
